@@ -28,7 +28,8 @@ namespace SportsStore
             services.AddDbContext<ApplicationDbContext>(options =>
                     options.UseSqlite("Data Source=SportsStore.db"));
             services.AddTransient<IProductRepository, EFProductRepository>();
-
+            services.AddMemoryCache();
+            services.AddSession();
 
         }
 
@@ -38,20 +39,35 @@ namespace SportsStore
             app.UseDeveloperExceptionPage();
             app.UseStatusCodePages();
             app.UseStaticFiles();
-
+            app.UseSession();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
-                    name: "pagination",
-                    template: "Products/Page{productPage}",
-                    defaults: new { Controller = "Product", action = "List" });
+                    name: null,
+                    template: "{category}/Page{page:int}",
+                    defaults: new { controller = "Product", action = "List" }
+                );
 
                 routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Product}/{action=List}/{id?}");
+                    name: null,
+                    template: "Page{page:int}",
+                    defaults: new { controller = "Product", action = "List", page = 1 }
+                );
 
+                routes.MapRoute(
+                    name: null,
+                    template: "{category}",
+                    defaults: new { controller = "Product", action = "List", page = 1 }
+                );
+
+                routes.MapRoute(
+                    name: null,
+                    template: "",
+                    defaults: new { controller = "Product", action = "List", page = 1 });
+
+routes.MapRoute(name: null, template: "{controller}/{action}/{id?}");
             });
-
+//SeedData.EnsurePopulated(app);
         }
     }
 }
