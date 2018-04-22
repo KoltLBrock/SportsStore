@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
@@ -10,6 +10,9 @@ namespace SportsStore.Models {
         public int OrderID { get; set; }
         [BindNever]
         public ICollection<CartLine> Lines { get; set; }
+
+        [BindNever]
+        public bool Shipped { get; set; }
 
         [Required(ErrorMessage = "Please enter a name")]
         public string Name { get; set; }

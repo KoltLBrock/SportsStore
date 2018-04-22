@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using SportsStore.Models;
 using System.Linq;
 using SportsStore.Models.ViewModels;
@@ -12,6 +12,7 @@ namespace SportsStore.Controllers {
         public ProductController(IProductRepository repo) {
             repository = repo;
         }
+
         public ViewResult List(string category, int productPage = 1)
             => View(new ProductsListViewModel {
                 Products = repository.Products
@@ -25,7 +26,7 @@ namespace SportsStore.Controllers {
                     TotalItems = category == null ?
                         repository.Products.Count() :
                         repository.Products.Where(e =>
-e.Category == category).Count()
+                            e.Category == category).Count()
                 },
                 CurrentCategory = category
             });

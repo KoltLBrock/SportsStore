@@ -1,4 +1,4 @@
-using System.Linq;
+﻿using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using SportsStore.Models;
 using SportsStore.Models.ViewModels;

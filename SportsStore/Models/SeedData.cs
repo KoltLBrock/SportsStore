@@ -1,5 +1,4 @@
-using System;
-using System.Linq;
+﻿using System.Linq;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
@@ -8,15 +7,11 @@ namespace SportsStore.Models {
 
     public static class SeedData {
 
-        public static void Initialize(IServiceProvider serviceProvider)
-        {
-            using(var context = new ApplicationDbContext(serviceProvider.GetRequiredService<DbContextOptions<ApplicationDbContext>>()))
-            {
-                if(context.Products.Any())
-                {
-                    return; //db was seeded
-                }
-
+        public static void EnsurePopulated(IApplicationBuilder app) {
+            ApplicationDbContext context = app.ApplicationServices
+                .GetRequiredService<ApplicationDbContext>();
+            //context.Database.Migrate();
+            if (!context.Products.Any()) {
                 context.Products.AddRange(
                     new Product {
                         Name = "Kayak", Description = "A boat for one person",
@@ -64,7 +59,6 @@ namespace SportsStore.Models {
                     }
                 );
                 context.SaveChanges();
-
             }
         }
     }

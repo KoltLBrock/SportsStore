@@ -1,4 +1,4 @@
-using SportsStore.Models;
+﻿using SportsStore.Models;
 
 namespace SportsStore.Models.ViewModels {
 
