@@ -22,12 +22,10 @@ namespace SportsStore {
 
         public void ConfigureServices(IServiceCollection services) {
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(
-                    Configuration["Data:SportStoreProducts:ConnectionString"]));
+                options.UseSqlite("Data Source=ApplicationDb.db"));
 
             services.AddDbContext<AppIdentityDbContext>(options =>
-                options.UseSqlServer(
-                    Configuration["Data:SportStoreIdentity:ConnectionString"]));
+                options.UseSqlite("Data Source=ApplicationDb.db"));
 
             services.AddIdentity<IdentityUser, IdentityRole>()
                 .AddEntityFrameworkStores<AppIdentityDbContext>()
